@@ -1,22 +1,35 @@
-# Practical 14: Logistic Regression using glm() in R
+# Load dataset
+ads <- read.csv("Social_Network_Ads.csv")
 
-# Step 1: Load CSV dataset
-data <- read.csv("Social_Network_Ads.csv")
+# Take first 10 observations
+ads10 <- ads[1:10, ]
 
-# Step 2: Check data
-head(data)
-str(data)
+# Create binary dependent variable
+# Purchased already exists (0 = No, 1 = Yes)
+ads10$Purchased <- as.numeric(ads10$Purchased)
 
-# Step 3: Logistic Regression Model
-model <- glm(Purchased ~ Age + EstimatedSalary,
-             data = data,
-             family = binomial)
+# Logistic Regression Model
+model_glm <- glm(Purchased ~ Age,
+                 data = ads10,
+                 family = binomial)
 
-# Step 4: Model Summary
-summary(model)
+# Model summary
+summary(model_glm)
 
-# Step 5: Predict probabilities
-data$Predicted_Prob <- predict(model, type = "response")
+# Predicted probabilities
+ads10$prob <- predict(model_glm, type = "response")
 
-# Step 6: View predictions
-head(data)
+# Logistic Regression Graph
+plot(ads10$Age,
+     ads10$Purchased,
+     main = "Logistic Regression using glm()",
+     xlab = "Age",
+     ylab = "Purchased (0/1)",
+     pch = 19,
+     col = "blue")
+
+# Probability curve
+lines(sort(ads10$Age),
+      ads10$prob[order(ads10$Age)],
+      col = "red",
+      lwd = 2)
