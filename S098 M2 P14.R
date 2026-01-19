@@ -22,7 +22,7 @@ ads10$prob <- predict(model_glm, type = "response")
 # Logistic Regression Graph
 plot(ads10$Age,
      ads10$Purchased,
-     main = "Logistic Regression using glm()",
+     main = "Logistic Regression",
      xlab = "Age",
      ylab = "Purchased (0/1)",
      pch = 19,
@@ -33,3 +33,4 @@ lines(sort(ads10$Age),
       ads10$prob[order(ads10$Age)],
       col = "red",
       lwd = 2)
+
